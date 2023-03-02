@@ -3,6 +3,8 @@ import axios from "axios";
 
 export const Weather = () => {
   const [coordinates, setCoordinates] = useState({});
+  const [forecastEndpoint, setForecastEndpoint] = useState("");
+  const [forecast, setForecast] = useState({});
 
   const googleApiKey = "AIzaSyCAuE4by_lkbm5IUSXws7yJn7ua2DXG6h4";
   const address = "9555 Kings Charter Drive, Ashland VA 23005";
@@ -26,13 +28,13 @@ export const Weather = () => {
   }, []);
 
   useEffect(() => {
-    if (coordinates) {
+    if (coordinates !== {}) {
       async function fetchWeather() {
         try {
           const response = await axios.get(
             `${weatherEndpoint}${coordinates.lat},${coordinates.lng}`
           );
-          console.log(response.data);
+          setForecastEndpoint(response.data.properties.forecast);
         } catch (err) {
           console.log(err);
         }
@@ -40,6 +42,20 @@ export const Weather = () => {
       fetchWeather();
     }
   }, [coordinates]);
+
+  useEffect(() => {
+    if (forecastEndpoint !== "") {
+      async function getForecast() {
+        try {
+          const response = await axios.get(`${forecastEndpoint}`);
+          setForecast(response.data.properties);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      getForecast();
+    }
+  }, [forecastEndpoint]);
 
   return <div>Weather data should appear here</div>;
 };
