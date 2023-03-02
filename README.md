@@ -7,6 +7,10 @@ A simple dashboard with Weather API Integration. Developed as a take-home assess
 - npx create-react-app weather-dashboard
 - npm install @mui/material @emotion/react @emotion/styled @mui/icons-material
 - npm install axios (for API calls)
+- npm i --save @fortawesome/fontawesome-svg-core
+- npm i --save @fortawesome/free-solid-svg-icons
+- npm i --save @fortawesome/free-regular-svg-icons
+- npm i --save @fortawesome/react-fontawesome@latest
 
 ## Dependencies and Technologies
 
@@ -16,6 +20,7 @@ A simple dashboard with Weather API Integration. Developed as a take-home assess
 - https://maps.googleapis.com/maps/api/geocode/json to convert readable address to lat / long
 - Material UI (React Styling library)
   -- Useful for simplified responsive design
+- FontAwesome (Weather icons)
 
 ### Objective
 

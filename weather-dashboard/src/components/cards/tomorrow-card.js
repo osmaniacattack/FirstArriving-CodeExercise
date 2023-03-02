@@ -2,21 +2,24 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
+import { Tooltip, Grid } from "@mui/material";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-import AirIcon from "@mui/icons-material/Air";
-import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
-import WbSunnyIcon from "@mui/icons-material/WbSunny";
-import AcUnitIcon from "@mui/icons-material/AcUnit";
-import CloudIcon from "@mui/icons-material/Cloud";
-import NightlightIcon from "@mui/icons-material/Nightlight";
-import ShowerIcon from "@mui/icons-material/Shower";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faWind,
+  faCloudBolt,
+  faSun,
+  faSnowflake,
+  faCloud,
+  faMoon,
+  faCloudRain,
+  faDroplet,
+} from "@fortawesome/free-solid-svg-icons";
 import DeviceThermostatIcon from "@mui/icons-material/DeviceThermostat";
 
 const ExpandMore = styled((props) => {
@@ -25,6 +28,7 @@ const ExpandMore = styled((props) => {
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
   marginLeft: "auto",
+  marginRight: "auto",
   transition: theme.transitions.create("transform", {
     duration: theme.transitions.duration.shortest,
   }),
@@ -38,18 +42,20 @@ export const TomorrowCard = (props) => {
     shortForecast,
     temperature,
     temperatureUnit,
+    wind,
+    humidity,
     index,
   } = props;
 
   const [expanded, setExpanded] = React.useState(false);
   const icons = {
-    Windy: <AirIcon />,
-    Thunder: <ThunderstormIcon />,
-    Sun: <WbSunnyIcon />,
-    Snow: <AcUnitIcon />,
-    Cloudy: <CloudIcon />,
-    Clear: <NightlightIcon />,
-    Rain: <ShowerIcon />,
+    Windy: <FontAwesomeIcon icon={faWind} />,
+    Thunder: <FontAwesomeIcon icon={faCloudBolt} />,
+    Sun: <FontAwesomeIcon icon={faSun} />,
+    Snow: <FontAwesomeIcon icon={faSnowflake} />,
+    Cloudy: <FontAwesomeIcon icon={faCloud} />,
+    Clear: <FontAwesomeIcon icon={faMoon} />,
+    Rain: <FontAwesomeIcon icon={faCloudRain} />,
   };
 
   /*
@@ -73,56 +79,132 @@ export const TomorrowCard = (props) => {
     }
   };
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
   const dateFormat = (date) => {
     let dateObj = new Date(date);
-    return dateObj.toLocaleDateString();
+    return dateObj.toLocaleDateString(undefined, {
+      month: "long",
+      day: "numeric",
+    });
   };
 
   return (
     <Card
-      sx={{ maxWidth: 345 }}
+      sx={{ width: "40%", p: 2, m: 2, borderRadius: "1em" }}
       index={index}
     >
-      <CardHeader
-        title={name}
-        subheader={`${dateFormat(date)}`}
-      />
       <CardContent>
-        <Typography variant="h2">{weatherIcon(shortForecast)}</Typography>
         <Typography
           variant="h5"
+          fontFamily={"Kumbh Sans"}
+          fontWeight={700}
           color="primary"
+          sx={{ mb: 3 }}
         >
-          {`${temperature} °${temperatureUnit}`}
+          {name}, {dateFormat(date)}
         </Typography>
         <Typography
           variant="h6"
-          color="text.secondary"
+          fontFamily={"Kumbh Sans"}
+          fontWeight={700}
+          color="primary"
+          sx={{ m: 1 }}
+        ></Typography>
+        <Typography
+          variant="h2"
+          color="primary"
         >
-          {shortForecast}
+          {weatherIcon(shortForecast)}
         </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
+        <Typography
+          variant="h3"
+          sx={{ m: 2 }}
+          fontFamily={"Kumbh Sans"}
+          fontWeight={700}
         >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </CardActions>
-      <Collapse
-        in={expanded}
-        timeout="auto"
-        unmountOnExit
-      >
-        <CardContent>{detailedForecast}</CardContent>
-      </Collapse>
+          {`${temperature}°`}
+        </Typography>
+        <Tooltip title={detailedForecast}>
+          <Typography
+            variant="subtitle1"
+            color="text.secondary"
+            fontFamily={"Kumbh Sans"}
+            fontWeight={400}
+            sx={{
+              m: 2,
+              "&:hover": {
+                cursor: "pointer",
+                backgroundColor: "lightgrey",
+              },
+            }}
+          >
+            {shortForecast}
+          </Typography>
+        </Tooltip>
+        <Grid container>
+          <Grid
+            item
+            xs={5}
+          >
+            <Typography
+              sx={{ m: 1 }}
+              fontFamily={"Kumbh Sans"}
+              fontWeight={700}
+            >
+              <FontAwesomeIcon icon={faWind} /> Wind
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            xs={2}
+          >
+            <Typography sx={{ m: 1 }}>|</Typography>
+          </Grid>
+          <Grid
+            item
+            xs={5}
+          >
+            <Typography
+              sx={{ m: 1 }}
+              fontFamily={"Kumbh Sans"}
+              fontWeight={700}
+            >
+              {wind}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid
+            item
+            xs={5}
+          >
+            <Typography
+              sx={{ m: 1 }}
+              fontFamily={"Kumbh Sans"}
+              fontWeight={700}
+            >
+              <FontAwesomeIcon icon={faDroplet} /> Hum
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            xs={2}
+          >
+            <Typography sx={{ m: 1 }}>|</Typography>
+          </Grid>
+          <Grid
+            item
+            xs={5}
+          >
+            <Typography
+              sx={{ m: 1 }}
+              fontFamily={"Kumbh Sans"}
+              fontWeight={700}
+            >
+              {humidity.value}
+            </Typography>
+          </Grid>
+        </Grid>
+      </CardContent>
     </Card>
   );
 };

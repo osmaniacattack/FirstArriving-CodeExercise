@@ -168,10 +168,12 @@ export default function Nav() {
           </ListItem>
         </List>
       </Drawer>
-      <Main open={open}>
+      <Main
+        open={open}
+        sx={{ backgroundColor: "#f0f8fa", height: "100vh" }}
+      >
         <DrawerHeader />
-        <Hero/>
-        <Weather/>
+        <Weather />
       </Main>
     </Box>
   );
