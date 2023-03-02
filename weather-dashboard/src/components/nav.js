@@ -1,28 +1,33 @@
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
+
+// MaterialUI Components
+import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import { Tooltip, Avatar } from "@mui/material";
-
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemButton from "@mui/material/ListItemButton";
 import IconButton from "@mui/material/IconButton";
+
+// Icon Imports
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HomeIcon from "@mui/icons-material/Home";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import SettingsIcon from "@mui/icons-material/Settings";
+
+// App Components
+import { Hero } from "./Hero";
 
 const drawerWidth = 240;
 
@@ -164,7 +169,7 @@ export default function Nav() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <Typography>Greeting Component</Typography>
+        <Hero/>
         <Typography>Weather Forecast Components</Typography>
       </Main>
     </Box>
