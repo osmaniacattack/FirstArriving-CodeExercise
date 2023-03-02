@@ -28,6 +28,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 
 // App Components
 import { Hero } from "./Hero";
+import { Weather } from "./Weather";
 
 const drawerWidth = 240;
 
@@ -170,7 +171,7 @@ export default function Nav() {
       <Main open={open}>
         <DrawerHeader />
         <Hero/>
-        <Typography>Weather Forecast Components</Typography>
+        <Weather/>
       </Main>
     </Box>
   );
