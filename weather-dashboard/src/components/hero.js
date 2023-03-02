@@ -66,12 +66,16 @@ export const Hero = (props) => {
         variant="h4"
         color="primary"
         textAlign="left"
+        fontFamily={"Kumbh Sans"}
+        fontWeight={800}
       >
         {time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
       </Typography>
       <Typography
         variant="h6"
         textAlign="left"
+        fontFamily={"Kumbh Sans"}
+        fontWeight={500}
       >
         {time.toLocaleDateString(undefined, {
           month: "long",
@@ -83,6 +87,8 @@ export const Hero = (props) => {
         variant="h5"
         color="primary"
         textAlign="left"
+        fontFamily={"Kumbh Sans"}
+        fontWeight={700}
       >
         {weatherIcon(shortForecast)}{` ${getGreeting()}, Adam!`}
       </Typography>
