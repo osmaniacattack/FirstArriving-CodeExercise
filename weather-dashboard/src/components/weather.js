@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import axios from "axios";
 import { TomorrowCard } from "./cards/tomorrow-card";
+import { Hero } from "./Hero";
 
 export const Weather = () => {
   const [coordinates, setCoordinates] = useState({});
@@ -54,6 +55,7 @@ export const Weather = () => {
         try {
           const response = await axios.get(`${forecastEndpoint}`);
           setForecast(response.data.properties);
+          console.log(response.data.properties);
         } catch (err) {
           console.log(err);
         }
@@ -91,27 +93,40 @@ export const Weather = () => {
 
   return (
     <>
+      <Hero shortForecast={forecast.periods[0].shortForecast} />
       <Typography
         variant="h4"
         color="primary"
+        sx={{ my: 2 }}
       >
-        Tomorrow&apos;s Weather
+        {`Weather Forecast`}
       </Typography>
-      {nextDayForecast !== []
-        ? nextDayForecast.map((date, index) => {
-            return (
-              <TomorrowCard
-                index={index}
-                name={date.name}
-                date={date.startTime}
-                detailedForecast={date.detailedForecast}
-                shortForecast={date.shortForecast}
-                temperature={date.temperature}
-                temperatureUnit={date.temperatureUnit}
-              />
-            );
-          })
-        : null}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexWrap: "wrap",
+          flexDirection: "row",
+        }}
+      >
+        {nextDayForecast !== []
+          ? nextDayForecast.map((date, index) => {
+              return (
+                <TomorrowCard
+                  key={index}
+                  index={index}
+                  name={date.name}
+                  date={date.startTime}
+                  detailedForecast={date.detailedForecast}
+                  shortForecast={date.shortForecast}
+                  temperature={date.temperature}
+                  temperatureUnit={date.temperatureUnit}
+                />
+              );
+            })
+          : null}
+      </Box>
     </>
   );
 };
