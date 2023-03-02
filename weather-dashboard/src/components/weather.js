@@ -13,7 +13,7 @@ export const Weather = () => {
   const [nextDayForecast, setNextDayForecast] = useState([]);
   const [updatedTime, setUpdatedTime] = useState(new Date());
 
-  const googleApiKey = "AIzaSyCAuE4by_lkbm5IUSXws7yJn7ua2DXG6h4";
+  const googleApiKey = process.env.REACT_APP_API_KEY;
   const address = "9555 Kings Charter Drive, Ashland VA 23005";
   const googleEndpoint = "https://maps.googleapis.com/maps/api/geocode/json";
   const weatherEndpoint = "https://api.weather.gov/points/";
@@ -161,7 +161,7 @@ export const Weather = () => {
           justifyContent: "center",
           alignItems: "center",
           flexWrap: "wrap",
-          flexDirection: "row",
+          flexDirection: ["column", "row"],
         }}
       >
         {nextDayForecast !== []

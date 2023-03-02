@@ -1,5 +1,6 @@
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
+import Background from "../weather-bg.svg";
 
 // MaterialUI Components
 import CssBaseline from "@mui/material/CssBaseline";
@@ -167,7 +168,13 @@ export default function Nav() {
       </Drawer>
       <Main
         open={open}
-        sx={{ backgroundColor: "#f0f8fa", height: "100vh" }}
+        sx={{
+          backgroundColor: "#f0f8fa",
+          height: ["100%", "100vh"],
+          backgroundImage: `url(${Background})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
       >
         <DrawerHeader />
         <Weather />

@@ -69,7 +69,7 @@ export const TomorrowCard = (props) => {
 
   return (
     <Card
-      sx={{ width: "40%", p: 2, m: 2, borderRadius: "1em" }}
+      sx={{ width: ["80%", "40%"], p: 2, m: 2, borderRadius: "1em" }}
       index={index}
     >
       <CardContent>
