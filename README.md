@@ -20,8 +20,7 @@ A simple dashboard with Weather API Integration. Developed as a take-home assess
 ### Objective
 
 - Create a basic, web-based digital dashboard which displays the
-  weather forecast for the following day at the First Arriving office: 9555 Kings Charter Drive,
-  Ashland VA 23005.
+  weather forecast for the following day at the First Arriving office: 9555 Kings Charter Drive, Ashland VA 23005.
 - Use the API listed above to retrieve data and populate app
 - Refresh weather data every 10 minutes
 
