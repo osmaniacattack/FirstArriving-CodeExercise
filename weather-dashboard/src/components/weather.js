@@ -9,8 +9,9 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 export const Weather = () => {
   const [coordinates, setCoordinates] = useState({});
   const [forecastEndpoint, setForecastEndpoint] = useState("");
-  const [forecast, setForecast] = useState({});
+  const [forecast, setForecast] = useState(null);
   const [nextDayForecast, setNextDayForecast] = useState([]);
+  const [updatedTime, setUpdatedTime] = useState(new Date());
 
   const googleApiKey = "AIzaSyCAuE4by_lkbm5IUSXws7yJn7ua2DXG6h4";
   const address = "9555 Kings Charter Drive, Ashland VA 23005";
@@ -18,6 +19,14 @@ export const Weather = () => {
   const weatherEndpoint = "https://api.weather.gov/points/";
 
   const today = new Date();
+
+  const lastGenerated = (date) => {
+    let dateObj = new Date(date);
+    return dateObj.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
 
   useEffect(() => {
     async function fetchGeocode() {
@@ -57,12 +66,20 @@ export const Weather = () => {
         try {
           const response = await axios.get(`${forecastEndpoint}`);
           setForecast(response.data.properties);
-          console.log(response.data.properties);
+          setUpdatedTime(new Date());
         } catch (err) {
           console.log(err);
         }
       }
       getForecast();
+
+      // Fetch data every 10 minutes
+      const intervalId = setInterval(() => {
+        getForecast();
+      }, 600000);
+
+      // Clean up the interval when component unmounts
+      return () => clearInterval(intervalId);
     }
   }, [forecastEndpoint]);
 
@@ -95,7 +112,7 @@ export const Weather = () => {
 
   return (
     <>
-      <Hero shortForecast={forecast.periods[0].shortForecast} />
+      {forecast && <Hero shortForecast={forecast.periods[0].shortForecast} />}
       <Typography
         variant="h4"
         color="primary"
@@ -110,11 +127,22 @@ export const Weather = () => {
         color="grey"
         fontFamily={"Kumbh Sans"}
         fontWeight={700}
-        sx={{ mb: 2 }}
+        sx={{ mt: -2, mb: 2 }}
       >
         <FontAwesomeIcon icon={faLocationDot} />
         {` 9555 Kings Charter Drive, Ashland VA 23005`}
       </Typography>
+      {forecast && (
+        <Typography
+          variant="subtitle1"
+          color="grey"
+          fontFamily={"Kumbh Sans"}
+          fontWeight={700}
+          sx={{ m: 1 }}
+        >
+          {`Last updated: ${lastGenerated(updatedTime)}`}
+        </Typography>
+      )}
       <Box
         sx={{
           display: "flex",
