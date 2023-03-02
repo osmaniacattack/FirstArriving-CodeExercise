@@ -22,13 +22,11 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HomeIcon from "@mui/icons-material/Home";
-import ThermostatIcon from "@mui/icons-material/Thermostat";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 // App Components
-import { Hero } from "./Hero";
-import { Weather } from "./Weather";
+import { Weather } from "./weather";
 
 const drawerWidth = 240;
 
@@ -141,7 +139,6 @@ export default function Nav() {
         <List>
           {[
             ["Home", <HomeIcon />],
-            ["Forecast", <ThermostatIcon />],
             ["Alerts", <CampaignIcon />],
             ["Settings", <SettingsIcon />],
           ].map((text) => (

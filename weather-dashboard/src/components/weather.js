@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Paper } from "@mui/material";
 import axios from "axios";
-import { Hero } from "./Hero";
+import { Hero } from "./hero";
 import { TomorrowCard } from "./cards/tomorrow-card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
@@ -113,36 +113,48 @@ export const Weather = () => {
   return (
     <>
       {forecast && <Hero shortForecast={forecast.periods[0].shortForecast} />}
-      <Typography
-        variant="h4"
-        color="primary"
-        fontFamily={"Kumbh Sans"}
-        fontWeight={700}
-        sx={{ my: 2 }}
+      <Paper
+        sx={{
+          my: 3,
+          mx: "auto",
+          p: 2,
+          maxWidth: "83%",
+          backgroundColor: "white",
+          borderRadius: "1em",
+          borderColor: "lightslategrey",
+        }}
       >
-        {`Weather Forecast`}
-      </Typography>
-      <Typography
-        variant="subtitle1"
-        color="grey"
-        fontFamily={"Kumbh Sans"}
-        fontWeight={700}
-        sx={{ mt: -2, mb: 2 }}
-      >
-        <FontAwesomeIcon icon={faLocationDot} />
-        {` 9555 Kings Charter Drive, Ashland VA 23005`}
-      </Typography>
-      {forecast && (
+        <Typography
+          variant="h4"
+          color="primary"
+          fontFamily={"Kumbh Sans"}
+          fontWeight={700}
+          sx={{ my: 2 }}
+        >
+          {`Weather Forecast`}
+        </Typography>
         <Typography
           variant="subtitle1"
           color="grey"
           fontFamily={"Kumbh Sans"}
           fontWeight={700}
-          sx={{ m: 1 }}
+          sx={{ mt: -2, mb: 2 }}
         >
-          {`Last updated: ${lastGenerated(updatedTime)}`}
+          <FontAwesomeIcon icon={faLocationDot} />
+          {` 9555 Kings Charter Drive, Ashland VA 23005`}
         </Typography>
-      )}
+        {forecast && (
+          <Typography
+            variant="subtitle1"
+            color="grey"
+            fontFamily={"Kumbh Sans"}
+            fontWeight={700}
+            sx={{ m: 1 }}
+          >
+            {`Last updated: ${lastGenerated(updatedTime)}`}
+          </Typography>
+        )}
+      </Paper>
       <Box
         sx={{
           display: "flex",

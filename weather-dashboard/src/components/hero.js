@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Paper } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faWind,
@@ -61,7 +61,13 @@ export const Hero = (props) => {
   }
 
   return (
-    <Box>
+    <Paper
+      sx={{
+        backgroundColor: "white",
+        p: 2,
+        borderRadius: "1em",
+      }}
+    >
       <Typography
         variant="h4"
         color="primary"
@@ -90,8 +96,9 @@ export const Hero = (props) => {
         fontFamily={"Kumbh Sans"}
         fontWeight={700}
       >
-        {weatherIcon(shortForecast)}{` ${getGreeting()}, Adam!`}
+        {weatherIcon(shortForecast)}
+        {` ${getGreeting()}, Adam!`}
       </Typography>
-    </Box>
+    </Paper>
   );
 };
