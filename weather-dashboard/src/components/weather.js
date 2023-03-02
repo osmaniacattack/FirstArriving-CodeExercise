@@ -103,13 +103,11 @@ export const Weather = () => {
               <TomorrowCard
                 index={index}
                 name={date.name}
-                icon={date.icon}
                 date={date.startTime}
                 detailedForecast={date.detailedForecast}
                 shortForecast={date.shortForecast}
                 temperature={date.temperature}
                 temperatureUnit={date.temperatureUnit}
-                windSpeed={date.windSpeed}
               />
             );
           })

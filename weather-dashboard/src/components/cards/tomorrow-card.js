@@ -10,6 +10,15 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import AirIcon from "@mui/icons-material/Air";
+import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
+import WbSunnyIcon from "@mui/icons-material/WbSunny";
+import AcUnitIcon from "@mui/icons-material/AcUnit";
+import CloudIcon from "@mui/icons-material/Cloud";
+import NightlightIcon from "@mui/icons-material/Nightlight";
+import ShowerIcon from "@mui/icons-material/Shower";
+import DeviceThermostatIcon from "@mui/icons-material/DeviceThermostat";
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -25,16 +34,44 @@ export const TomorrowCard = (props) => {
   const {
     name,
     date,
-    icon,
     detailedForecast,
     shortForecast,
     temperature,
     temperatureUnit,
-    windSpeed,
     index,
   } = props;
 
   const [expanded, setExpanded] = React.useState(false);
+  const icons = {
+    Windy: <AirIcon />,
+    Thunder: <ThunderstormIcon />,
+    Sun: <WbSunnyIcon />,
+    Snow: <AcUnitIcon />,
+    Cloudy: <CloudIcon />,
+    Clear: <NightlightIcon />,
+    Rain: <ShowerIcon />,
+  };
+
+  /*
+   * This function takes a string (short forecast) as input and returns the first relevant icon by seeing if a weather key is contained within the forecast.
+   * If the possible icons array is empty, a generic thermometer icon is returned.
+   *
+   * @param {String} short forecast - A string containing concise forecast information.
+   * @returns {Icon} An icon that is either default or the first entry of an array.
+   */
+  const weatherIcon = (string) => {
+    let possibleIcons = [];
+    for (const key in icons) {
+      if (string.includes(key)) {
+        possibleIcons.push(icons[key]);
+      }
+    }
+    if (possibleIcons) {
+      return possibleIcons[0];
+    } else {
+      return <DeviceThermostatIcon />;
+    }
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -54,12 +91,8 @@ export const TomorrowCard = (props) => {
         title={name}
         subheader={`${dateFormat(date)}`}
       />
-      <CardMedia
-        component="img"
-        image={icon}
-        alt="Weather Icon"
-      />
       <CardContent>
+        <Typography variant="h2">{weatherIcon(shortForecast)}</Typography>
         <Typography
           variant="h5"
           color="primary"
