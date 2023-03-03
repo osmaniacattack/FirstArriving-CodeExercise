@@ -169,7 +169,6 @@ export default function Nav() {
       <Main
         open={open}
         sx={{
-          backgroundColor: "#f0f8fa",
           height: ["100%", "100vh"],
           backgroundImage: `url(${Background})`,
           backgroundSize: "cover",

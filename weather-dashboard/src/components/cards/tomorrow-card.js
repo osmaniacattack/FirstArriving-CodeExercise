@@ -6,15 +6,11 @@ import Typography from "@mui/material/Typography";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faWind,
-  faCloudBolt,
-  faSun,
-  faSnowflake,
-  faCloud,
-  faMoon,
-  faCloudRain,
   faDroplet,
 } from "@fortawesome/free-solid-svg-icons";
-import DeviceThermostatIcon from "@mui/icons-material/DeviceThermostat";
+import { weatherIcon } from "../utils/weatherUtils";
+import { dateFormat } from "../utils/dateUtils";
+
 
 export const TomorrowCard = (props) => {
   const {
@@ -27,45 +23,6 @@ export const TomorrowCard = (props) => {
     humidity,
     index,
   } = props;
-
-  const icons = {
-    Windy: <FontAwesomeIcon icon={faWind} />,
-    Thunder: <FontAwesomeIcon icon={faCloudBolt} />,
-    Sun: <FontAwesomeIcon icon={faSun} />,
-    Snow: <FontAwesomeIcon icon={faSnowflake} />,
-    Cloudy: <FontAwesomeIcon icon={faCloud} />,
-    Clear: <FontAwesomeIcon icon={faMoon} />,
-    Rain: <FontAwesomeIcon icon={faCloudRain} />,
-  };
-
-  /*
-   * This function takes a string (short forecast) as input and returns the first relevant icon by seeing if a weather key is contained within the forecast.
-   * If the possible icons array is empty, a generic thermometer icon is returned.
-   *
-   * @param {String} short forecast - A string containing concise forecast information.
-   * @returns {Icon} An icon that is either default or the first entry of an array.
-   */
-  const weatherIcon = (string) => {
-    let possibleIcons = [];
-    for (const key in icons) {
-      if (string.includes(key)) {
-        possibleIcons.push(icons[key]);
-      }
-    }
-    if (possibleIcons) {
-      return possibleIcons[0];
-    } else {
-      return <DeviceThermostatIcon />;
-    }
-  };
-
-  const dateFormat = (date) => {
-    let dateObj = new Date(date);
-    return dateObj.toLocaleDateString(undefined, {
-      month: "long",
-      day: "numeric",
-    });
-  };
 
   return (
     <Card
