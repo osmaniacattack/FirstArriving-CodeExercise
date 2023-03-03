@@ -5,70 +5,88 @@ import { Hero } from "./hero";
 import { TomorrowCard } from "./cards/tomorrow-card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { lastGenerated } from "./utils/dateUtils";
+
+const GOOGLE_API_KEY = process.env.REACT_APP_API_KEY;
+const ADDRESS = "9555 Kings Charter Drive, Ashland VA 23005";
+const GOOGLE_ENDPOINT = "https://maps.googleapis.com/maps/api/geocode/json";
+const WEATHER_ENDPOINT = "https://api.weather.gov/points/";
 
 export const Weather = () => {
-  const [coordinates, setCoordinates] = useState({});
-  const [forecastEndpoint, setForecastEndpoint] = useState("");
+  const [coordinates, setCoordinates] = useState(null);
+  const [forecastEndpoint, setForecastEndpoint] = useState(null);
   const [forecast, setForecast] = useState(null);
   const [nextDayForecast, setNextDayForecast] = useState([]);
   const [updatedTime, setUpdatedTime] = useState(new Date());
 
-  const googleApiKey = process.env.REACT_APP_API_KEY;
-  const address = "9555 Kings Charter Drive, Ashland VA 23005";
-  const googleEndpoint = "https://maps.googleapis.com/maps/api/geocode/json";
-  const weatherEndpoint = "https://api.weather.gov/points/";
-
   const today = new Date();
 
-  const lastGenerated = (date) => {
-    let dateObj = new Date(date);
-    return dateObj.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
+  /*
+   * This function sends a formatted address string in a GET request to Google Geocode's API.
+   * Expects coordinates as latitude/longitude in return.
+   *
+   * @params {address, api_key} forecast.periods - An array of Date objects representing forecast periods.
+   * @returns {Object} A response object containing geographical data (e.g. coordinates).
+   *
+   * On success, move to fetchWeater() to obtain forecast endpoint
+   */
   useEffect(() => {
     async function fetchGeocode() {
       try {
         let params = {
-          address: address,
-          key: googleApiKey,
+          address: ADDRESS,
+          key: GOOGLE_API_KEY,
         };
-        const response = await axios.get(`${googleEndpoint}`, { params });
-        setCoordinates(response.data.results[0].geometry.location);
+        const { data } = await axios.get(`${GOOGLE_ENDPOINT}`, { params });
+        setCoordinates(data.results[0].geometry.location);
       } catch (err) {
-        console.log(err);
+        console.log("Error fetching coordinates: ", err);
       }
     }
     fetchGeocode();
   }, []);
 
+  /*
+   * This function sends coordinates in a GET request to api.weather.gov.
+   * Expects a forecast endpoint to call in future GET request in return.
+   *
+   * @returns {Object} A response object containing various endpoints to call based on supplied geographical data.
+   *
+   * On success, move to getForecast() to obtain specific forecast data
+   */
   useEffect(() => {
-    if (coordinates !== {}) {
+    if (coordinates) {
       async function fetchWeather() {
         try {
-          const response = await axios.get(
-            `${weatherEndpoint}${coordinates.lat},${coordinates.lng}`
+          const { data } = await axios.get(
+            `${WEATHER_ENDPOINT}${coordinates.lat},${coordinates.lng}`
           );
-          setForecastEndpoint(response.data.properties.forecast);
+          setForecastEndpoint(data.properties.forecast);
         } catch (err) {
-          console.log(err);
+          console.log("Error fetching forecast endpoint: ", err);
         }
       }
       fetchWeather();
     }
   }, [coordinates]);
 
+  /*
+   * This function sends a GET request to an endpointed obtained from fetchWeather()
+   * Expects forecast data.
+   *
+   * @returns {Object} A response object containing various forecast data for the next week.
+   *
+   * On success, move to getNextDayForecast() to obtain specific forecast data for the following day.
+   */
   useEffect(() => {
     if (forecastEndpoint !== "") {
       async function getForecast() {
         try {
-          const response = await axios.get(`${forecastEndpoint}`);
-          setForecast(response.data.properties);
+          const { data } = await axios.get(`${forecastEndpoint}`);
+          setForecast(data.properties);
           setUpdatedTime(new Date());
         } catch (err) {
-          console.log(err);
+          console.log("Error fetching forecast data: ", err);
         }
       }
       getForecast();
