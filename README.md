@@ -32,8 +32,8 @@ A simple dashboard with Weather API Integration. Developed as a take-home assess
 ### API Information
 
 - https://api.weather.gov
-    * Weather is broken up into grids.
-    * Must convert physical address >> coordinates (lat/long) >> grid(x,y)
+    * Weather data is broken up by grids
+    * Must convert physical address -> coordinates (lat/long) -> grid(x,y) to obtain a /forecast endpoint
     * Must fetch /forecast after obtaining grid
 - https://maps.googleapis.com/maps/api/geocode/json
     * Used to convert office address into lat/long to use weather API
